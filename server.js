@@ -17,7 +17,10 @@ app.use(cookieParser());
 
 
 
-app.use('/', require('./routes/authroutes'))
+app.use('/', require('./routes/authroutes')),//Authentication routes
+app.use('/preferred-language', require('./routes/preferredLanguageRouter')); // Preferred Language routes
+app.use('/learning-goal', require('./routes/learningGoalRouter'));// Learning Goal routes
+
 
 
 

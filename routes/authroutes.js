@@ -4,9 +4,6 @@ const { test, registerUser, loginUser } = require('../controller/authController'
 const { authenticateToken } = require("../security/Auth");
 
 
-
-
-
 //test route
 router.get('/', test)
 
