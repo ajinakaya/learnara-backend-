@@ -21,11 +21,6 @@ const userSchema = new mongoose.Schema({
         default: 'user',
     },
 
-    preferredLanguage: {
-        type: String,
-        required: true,
-    },
-
     tokens:[
         {
             token :{
