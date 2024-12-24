@@ -9,9 +9,9 @@ const test = (req, res) => {
 
 const registerUser = async (req, res) => {
     try {
-        const { username, email, password, confirmpassword,preferredLanguage } = req.body;
+        const { username, email, password, confirmpassword} = req.body;
 
-        if (!username || !email || !password || !confirmpassword || !preferredLanguage) {
+        if (!username || !email || !password || !confirmpassword ) {
             return res.json({
                 error: 'All fields are required',
             });
@@ -43,7 +43,7 @@ const registerUser = async (req, res) => {
             username,
             email,
             password: hashedPassword,
-            preferredLanguage
+        
         });
 
         return res.json(user);
