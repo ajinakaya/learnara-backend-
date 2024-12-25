@@ -1,73 +1,99 @@
-const LearningGoal = require('../models/LearningGoal');
+const Goal = require('../models/setgoal'); 
 
-// Create or update learning goal
-const setLearningGoal = async (req, res) => {
-  const { userId } = req.user; 
-  const { goal } = req.body;
-
-  if (!goal) {
-    return res.status(400).json({ error: 'Goal is required' });
-  }
-
+// Create a new Goal
+const createGoal = async (req, res) => {
   try {
-    // Check if the learning goal already exists for this user
-    const existingGoal = await LearningGoal.findOne({ userId });
+    const { goal, levels } = req.body;
 
+    // Check if goal already exists
+    const existingGoal = await Goal.findOne({ goal });
     if (existingGoal) {
-      // Update existing goal
-      existingGoal.goal = goal;
-      await existingGoal.save();
-      return res.status(200).json({ message: 'Learning goal updated', data: existingGoal });
+      return res.status(400).json({ error: 'Goal already exists' });
     }
 
-    // Create new learning goal
-    const newGoal = new LearningGoal({ userId, goal });
+    
+    const newGoal = new Goal({
+      goal,
+      levels
+    });
+
     await newGoal.save();
-    return res.status(201).json({ message: 'Learning goal set', data: newGoal });
+    res.status(201).json(newGoal);
   } catch (error) {
-    console.error('Error setting learning goal:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Failed to create goal' });
   }
 };
 
-// Get learning goal
-const getLearningGoal = async (req, res) => {
-  const { userId } = req.user;
-
+// Get all Goals
+const getAllGoals = async (req, res) => {
   try {
-    const goal = await LearningGoal.findOne({ userId });
+    const goals = await Goal.find();
+    res.status(200).json(goals);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve goals' });
+  }
+};
+
+// Get  Goal by ID
+const getGoalById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const goal = await Goal.findById(id);
 
     if (!goal) {
-      return res.status(404).json({ error: 'Learning goal not found' });
+      return res.status(404).json({ error: 'Goal not found' });
     }
 
-    res.status(200).json({ data: goal });
+    res.status(200).json(goal);
   } catch (error) {
-    console.error('Error fetching learning goal:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Failed to retrieve goal' });
   }
 };
 
-// Delete learning goal
-const deleteLearningGoal = async (req, res) => {
-  const { userId } = req.user;
-
+// Update an existing Goal
+const updateGoal = async (req, res) => {
   try {
-    const deletedGoal = await LearningGoal.findOneAndDelete({ userId });
+    const { id } = req.params;
+    const { goal, levels } = req.body;
 
-    if (!deletedGoal) {
-      return res.status(404).json({ error: 'Learning goal not found' });
+    // Check if the goal exists
+    const existingGoal = await Goal.findById(id);
+    if (!existingGoal) {
+      return res.status(404).json({ error: 'Goal not found' });
     }
 
-    res.status(200).json({ message: 'Learning goal deleted', data: deletedGoal });
+    // Update goal and levels
+    existingGoal.goal = goal || existingGoal.goal;
+    existingGoal.levels = levels || existingGoal.levels;
+
+    await existingGoal.save();
+    res.status(200).json(existingGoal);
   } catch (error) {
-    console.error('Error deleting learning goal:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Failed to update goal' });
+  }
+};
+
+// Delete a Goal
+const deleteGoal = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const goal = await Goal.findById(id);
+
+    if (!goal) {
+      return res.status(404).json({ error: 'Goal not found' });
+    }
+
+    await goal.remove();
+    res.status(200).json({ message: 'Goal deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete goal' });
   }
 };
 
 module.exports = {
-  setLearningGoal,
-  getLearningGoal,
-  deleteLearningGoal,
+  createGoal,
+  getAllGoals,
+  getGoalById,
+  updateGoal,
+  deleteGoal
 };

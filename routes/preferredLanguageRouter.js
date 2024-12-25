@@ -9,7 +9,7 @@ const {
 
 // Preferred Language Routes
 router.post('/set', authenticateToken, setPreferredLanguage);
-router.get('/get', authenticateToken, getPreferredLanguage);
+router.get('/get', getPreferredLanguage);
 router.delete('/delete', authenticateToken, deletePreferredLanguage);
 
 module.exports = router;
