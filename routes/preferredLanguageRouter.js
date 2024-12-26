@@ -2,14 +2,17 @@ const express = require('express');
 const router = express.Router();
 const { authenticateToken } = require('../security/Auth');
 const {
-  setPreferredLanguage,
-  getPreferredLanguage,
-  deletePreferredLanguage,
+  addLanguage,
+  updateLanguage,
+  deleteLanguage,
+  getLanguages,
 } = require('../controller/preferredLanguageController');
 
 // Preferred Language Routes
-router.post('/set', authenticateToken, setPreferredLanguage);
-router.get('/get', getPreferredLanguage);
-router.delete('/delete', authenticateToken, deletePreferredLanguage);
+
+router.post('/preferredlanguages', addLanguage);
+router.get('/preferredlanguages', getLanguages);
+router.put('/preferredlanguages/:languageId', updateLanguage);
+router.delete('/preferredlanguages/:languageId', deleteLanguage);
 
 module.exports = router;

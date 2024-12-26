@@ -1,73 +1,81 @@
 const PreferredLanguage = require('../models/PreferredLanguage');
 
-// Create or update preferred language
-const setPreferredLanguage = async (req, res) => {
-  const { userId } = req.user; 
-  const { language } = req.body;
-
-  if (!language) {
-    return res.status(400).json({ error: 'Language is required' });
-  }
-
+// Add a new language
+const addLanguage = async (req, res) => {
   try {
-    // Check if the preferred language already exists for this user
-    const existingLanguage = await PreferredLanguage.findOne({ userId });
+    const { languageName, languageImage } = req.body;
 
+    // Validate input
+    if (!languageName || !languageImage) {
+      return res.status(400).json({ error: 'Name and flag image are required' });
+    }
+
+    const existingLanguage = await PreferredLanguage.findOne({ languageName });
     if (existingLanguage) {
-      // Update existing record
-      existingLanguage.language = language;
-      await existingLanguage.save();
-      return res.status(200).json({ message: 'Preferred language updated', data: existingLanguage });
+      return res.status(400).json({ error: 'Language already exists' });
     }
 
-    // Create new preferred language
-    const newLanguage = new PreferredLanguage({ userId, language });
-    await newLanguage.save();
-    return res.status(201).json({ message: 'Preferred language set', data: newLanguage });
+    const language = await PreferredLanguage.create({ languageName, languageImage });
+    res.status(201).json(language);
   } catch (error) {
-    console.error('Error setting preferred language:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: `Server error: ${error.message}` });
   }
 };
 
-// Get preferred language
-const getPreferredLanguage = async (req, res) => {
-  const { userId } = req.user;
-
+// Update a language
+const updateLanguage = async (req, res) => {
   try {
-    const language = await PreferredLanguage.findOne({ userId });
+    const { languageId } = req.params;
+    const { languageName, languageImage } = req.body;
 
+    if (!languageName && !languageImage) {
+      return res.status(400).json({ error: 'At least one field (name or flagImage) must be provided to update' });
+    }
+
+    const language = await PreferredLanguage.findById(languageId);
     if (!language) {
-      return res.status(404).json({ error: 'Preferred language not found' });
+      return res.status(404).json({ error: 'Language not found' });
     }
 
-    res.status(200).json({ data: language });
+    if (languageName) language.languageName = languageName;
+    if (languageImage) language.languageImage = languageImage;
+
+    await language.save();
+    res.status(200).json(language);
   } catch (error) {
-    console.error('Error fetching preferred language:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: `Server error: ${error.message}` });
   }
 };
 
-// Delete preferred language
-const deletePreferredLanguage = async (req, res) => {
-  const { userId } = req.user;
-
+// Delete a language
+const deleteLanguage = async (req, res) => {
   try {
-    const deletedLanguage = await PreferredLanguage.findOneAndDelete({ userId });
+    const { languageId } = req.params;
 
+    const deletedLanguage = await PreferredLanguage.findByIdAndDelete(languageId);
     if (!deletedLanguage) {
-      return res.status(404).json({ error: 'Preferred language not found' });
+      return res.status(404).json({ error: 'Language not found' });
     }
 
-    res.status(200).json({ message: 'Preferred language deleted', data: deletedLanguage });
+    res.status(200).json({ message: 'Language deleted successfully', data: deletedLanguage });
   } catch (error) {
-    console.error('Error deleting preferred language:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: `Server error: ${error.message}` });
+  }
+};
+
+// Get all languages
+const getLanguages = async (req, res) => {
+  try {
+    const languages = await PreferredLanguage.find();
+    res.status(200).json(languages);
+  } catch (error) {
+    res.status(500).json({ error: `Server error: ${error.message}` });
   }
 };
 
 module.exports = {
-  setPreferredLanguage,
-  getPreferredLanguage,
-  deletePreferredLanguage,
+  addLanguage,
+  updateLanguage,
+  deleteLanguage,
+  getLanguages,
 };
