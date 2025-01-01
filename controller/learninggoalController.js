@@ -10,8 +10,6 @@ const createLearningGoal = async (req, res) => {
         // Find the goal
         let goalDoc = await Goal.findOne({ goal: goal.goal });
 
-
-
         // Create the learning goal
         const learningGoal = await LearningGoal.create({
             userId,
@@ -21,8 +19,6 @@ const createLearningGoal = async (req, res) => {
             duration,
             time
         });
-
-
         const populatedGoal = await LearningGoal.findById(learningGoal._id)
             .populate('goalId');
 

@@ -10,7 +10,7 @@ const learningGoalSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Goal',
     required: true,
-  },
+  }, 
   days: {
     type: [String],
     enum: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],

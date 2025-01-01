@@ -5,7 +5,7 @@ const {
     updateUserLanguagePreference,
     removeUserLanguagePreference,
     getUserLanguagePreferences,
-} = require('../controller/languageselection');
+} = require('../controller/languageselectionController');
 
 const router = express.Router();
 

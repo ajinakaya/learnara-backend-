@@ -12,19 +12,19 @@ const registerUser = async (req, res) => {
         const { username, email, password, confirmpassword} = req.body;
 
         if (!username || !email || !password || !confirmpassword ) {
-            return res.json({
+            return res.status(400).json({
                 error: 'All fields are required',
             });
         }
 
         if (password.length < 6) {
-            return res.json({
-                error: 'Password  should be at least 6 characters long',
+            return res.status(400).json({
+                error: 'Password should be at least 6 characters long',
             });
         }
 
         if (password !== confirmpassword) {
-            return res.json({
+            return res.status(400).json({
                 error: "Passwords don't match",
             });
         }
@@ -32,7 +32,7 @@ const registerUser = async (req, res) => {
         const exist = await User.findOne({ email });
 
         if (exist) {
-            return res.json({
+            return res.status(400).json({
                 error: 'Email is already taken',
             });
         }
@@ -49,7 +49,7 @@ const registerUser = async (req, res) => {
         return res.json(user);
     } catch (error) {
         console.log(error);
-        return res.json({
+        return res.status(500).json({
             error: 'An error occurred during registration',
         });
     }
@@ -63,9 +63,9 @@ const loginUser = async (req, res) => {
         const user = await User.findOne({ email });
 
         if (!user) {
-            console.log('User not found:', email);
-            return res.json({
-                error: 'No user found',
+            console.log('email not found:', email);
+            return res.status(404).json({
+                error: 'No email found',
             });
         }
 
@@ -87,21 +87,18 @@ const loginUser = async (req, res) => {
             });
 
         } else {
-            console.log('Incorrect password for:', email);
-            return res.json({
-                error: 'Incorrect password',
+            console.log('Incorrect email or password for:', email);
+            return res.status(401).json({
+                error: 'Incorrect email or password',
             });
         }
     } catch (error) {
         console.log('Error during login:', error);
-        return res.json({
+        return res.status(500).json({
             error: 'An error occurred during login',
         });
     }
 };
-
-
-
 
 
 module.exports = {
