@@ -1,6 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv').config({ path: './config/.env' });
-const { mongoose } = require('mongoose')
+const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser');
 const app = express();
 
@@ -29,7 +29,7 @@ app.use('/video', require('./routes/videorouter'));
 app.use('/lesson', require('./routes/sublessonrouter'));
 app.use('/flashcard', require('./routes/flashcardrouter'));
 app.use('/courser', require('./routes/courserouter'));   
-
+app.use('/userprogress', require('./routes/progress/userprogressrouter'));
 
 
 const port = 3001;
