@@ -18,34 +18,52 @@ const userProgressSchema = new mongoose.Schema(
     },
     subLessonsCompletion: [
       {
-        subLesson: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'SubLesson',
-          required: true
-        },
-        completionStatus: {
-          type: String,
-          enum: ['not_started', 'in_progress', 'completed'],
-          default: 'not_started'
-        },
-        completionDate: {
-          type: Date,
-          default: null 
-        },
-        updatedAt: {
-          type: Date,
-          default: Date.now 
-        }
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'SubLessonProgress'
       }
     ],
     completionPercentage: {
       type: Number,
       default: 0,
       min: 0,
-      max: 100 
-    }
+      max: 100
+    },
+    totalStudyTime: {
+      type: Number, 
+      default: 0
+    },
+    streakDays: {
+      type: Number,
+      default: 0
+    },
+    weeklyProgress: {
+      Monday: { type: Boolean, default: false },
+      Tuesday: { type: Boolean, default: false },
+      Wednesday: { type: Boolean, default: false },
+      Thursday: { type: Boolean, default: false },
+      Friday: { type: Boolean, default: false },
+      Saturday: { type: Boolean, default: false },
+      Sunday: { type: Boolean, default: false }
+    },
+    recentActivities: [
+      {
+        activityId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'ActivityProgress'
+        },
+        activityType: {
+          type: String,
+          enum: ['VideoActivity', 'AudioActivity', 'QuizActivity', 'FlashcardActivity']
+        },
+        title: String, 
+        completedAt: Date,
+        score: Number,
+        progress: Number 
+      }
+    ]
+    
   },
-  { timestamps: true } 
+  { timestamps: true }
 );
 
 module.exports = mongoose.model('UserProgress', userProgressSchema);
