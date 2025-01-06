@@ -1,4 +1,4 @@
-const FlashcardActivity = require('../models/flashcard');
+const FlashcardActivity = require('../../models/activityType/flashcard');
 
 // Create a Flashcard Activity
 const createFlashcardActivity = async (req, res) => {

@@ -1,8 +1,8 @@
-const LearningGoal = require('../models/learninggoals');
-const Goal = require('../models/setgoal');
+const LearningGoal = require('../../models/goal/user_learninggoals');
+const Goal = require('../../models/goal/setgoal');
 
 // Create a new learning goal
-const createLearningGoal = async (req, res) => {
+const createLearningGoal = async (req, res) => { 
     try {
         const userId = req.user._id;
         const { goal, frequency, days, duration, time } = req.body;
@@ -46,13 +46,12 @@ const getLearningGoalById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        // Fetch the learning goal and populate the associated goal
+l
         const learningGoal = await LearningGoal.findById(id).populate('goalId');
         if (!learningGoal) {
             return res.status(404).json({ error: 'Learning goal not found' });
         }
 
-        // Ensure the authenticated user is the owner of the learning goal
         if (learningGoal.userId.toString() !== req.user._id.toString()) {
             return res.status(403).json({ error: 'You are not authorized to access this learning goal' });
         }

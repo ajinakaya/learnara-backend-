@@ -6,7 +6,7 @@ const {
     getVideoActivityById,
     updateVideoActivity,
     deleteVideoActivity
-} = require('../controller/videoController');
+} = require('../../controller/activityType/video Controller');
 
 
 // Routes

@@ -1,4 +1,4 @@
-const VideoActivity = require('../models/video');
+const VideoActivity = require('../../models/activityType/video');
 
 // Create a Video Activity
 const createVideoActivity = async (req, res) => {

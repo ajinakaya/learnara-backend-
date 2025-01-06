@@ -1,4 +1,4 @@
-const AudioActivity = require('../models/audio');
+const AudioActivity = require('../../models/activityType/audio');
 
 // Create an Audio Activity
 const createAudioActivity = async (req, res) => {

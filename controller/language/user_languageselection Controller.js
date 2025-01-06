@@ -1,5 +1,5 @@
-const UserLanguagePreference = require('../models/userlanguagepreference');
-const PreferredLanguage = require('../models/PreferredLanguage');
+const UserLanguagePreference = require('../../models/language/userlanguagepreference');
+const PreferredLanguage = require('../../models/language/PreferredLanguage');
 
 // Add a language preference
 const addUserLanguagePreference = async (req, res) => {

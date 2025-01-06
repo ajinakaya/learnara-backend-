@@ -1,4 +1,4 @@
-const PreferredLanguage = require('../models/PreferredLanguage');
+const PreferredLanguage = require('../../models/language/PreferredLanguage');
 
 // Add a new language
 const addLanguage = async (req, res) => {

@@ -6,7 +6,7 @@ const {
   getQuizActivityById,
   updateQuizActivity,
   deleteQuizActivity
-} = require('../controller/quizController');
+} = require('../../controller/activityType/quiz Controller');
 
 
 // Routes

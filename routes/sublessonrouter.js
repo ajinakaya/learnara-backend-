@@ -6,7 +6,7 @@ const {
   getSubLessonById,
   updateSubLesson,
   deleteSubLesson
-} = require('../controller/sublessonController');
+} = require('../controller/sublesson Controller');
 
 // Routes
 router.get('/lesson', getAllSubLessons);

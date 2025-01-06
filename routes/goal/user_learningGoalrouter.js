@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { authenticateToken } = require('../security/Auth');
+const { authenticateToken } = require('../../security/Auth');
 const {
   createLearningGoal,
   getLearningGoals,
   getLearningGoalById,
   updateLearningGoal,
   deleteLearningGoal,
-} = require('../controller/learninggoalController');
+} = require('../../controller/goal/user_learninggoal Controller');
 
 // Learning Goal Routes
 router.post('/goal', authenticateToken, createLearningGoal);

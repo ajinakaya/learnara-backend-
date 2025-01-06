@@ -1,4 +1,4 @@
-const QuizActivity = require('../models/quiz');
+const QuizActivity = require('../../models/activityType/quiz');
 
 // Create a Quiz Activity
 const createQuizActivity = async (req, res) => {

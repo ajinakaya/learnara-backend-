@@ -1,4 +1,4 @@
-const Goal = require('../models/setgoal'); 
+const Goal = require('../../models/goal/setgoal'); 
 
 // Create a new Goal
 const createGoal = async (req, res) => {

@@ -1,11 +1,11 @@
 const express = require('express');
-const { authenticateToken } = require('../security/Auth');
+const { authenticateToken } = require('../../security/Auth');
 const {
     addUserLanguagePreference,
     updateUserLanguagePreference,
     removeUserLanguagePreference,
     getUserLanguagePreferences,
-} = require('../controller/languageselectionController');
+} = require('../../controller/language/user_languageselection Controller');
 
 const router = express.Router();
 
