@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 const dailyStudySchema = new mongoose.Schema({
     userId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -16,3 +18,5 @@ const dailyStudySchema = new mongoose.Schema({
       ref: 'ActivityProgress'
     }]
   });
+
+  module.exports = mongoose.model('dailystudy', dailyStudySchema);

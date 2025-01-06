@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 const activityProgressSchema = new mongoose.Schema({
     userId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -38,3 +40,5 @@ const activityProgressSchema = new mongoose.Schema({
       speakingExercisesDone: Number // For speaking exercises
     }
   });
+  
+  module.exports = mongoose.model('activityProgress', activityProgressSchema);
