@@ -10,7 +10,7 @@ const getAllChapters = async (req, res) => {
   }
 };
 
-// Get a single chapter by its ID 
+// Get a single chapter 
 const getChapterById = async (req, res) => {
   try {
     const chapter = await Chapter.findById(req.params.id).populate('subLessons prerequisites');
@@ -58,7 +58,7 @@ const updateChapter = async (req, res) => {
   }
 };
 
-// Delete a chapter by its ID
+// Delete a chapter 
 const deleteChapter = async (req, res) => {
   try {
     const chapter = await Chapter.findByIdAndDelete(req.params.id);
