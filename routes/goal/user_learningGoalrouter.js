@@ -7,7 +7,7 @@ const {
   getLearningGoalById,
   updateLearningGoal,
   deleteLearningGoal,
-} = require('../../controller/goal/user_learninggoal Controller');
+} = require('../../controller/goal/user_learninggoalController');
 
 // Learning Goal Routes
 router.post('/goal', authenticateToken, createLearningGoal);

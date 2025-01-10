@@ -4,7 +4,7 @@ const {
     getActivityProgress,
     updateActivityProgress,
     getAllActivitiesProgress
-} = require('../../controller/progress/activityProgress Controller');
+} = require('../../controller/progress/activityProgressController');
 
 const { authenticateToken } = require("../../security/Auth");
 

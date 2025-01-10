@@ -18,6 +18,7 @@ app.use(cookieParser());
 
 // routes
 app.use('/', require('./routes/authroutes')),//Authentication routes
+app.use('/users', require('./routes/userroutes')),//User routes
 app.use('/preferred-language', require('./routes/language/preferredLanguagerouter')); 
 app.use('/language', require('./routes/language/user_languageselecteroute'));
 app.use('/learning-goal', require('./routes/goal/user_learningGoalrouter'));

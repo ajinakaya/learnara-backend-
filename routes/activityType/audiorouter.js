@@ -7,7 +7,7 @@ const {
     getAudioActivityById,
     updateAudioActivity,
     deleteAudioActivity
-} = require('../../controller/activityType/audio Controller');
+} = require('../../controller/activityType/audioController');
 
 
 router.post('/audio', createAudioActivity);

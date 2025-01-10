@@ -5,7 +5,7 @@ const {
     getUserProgress, 
     getCourseCompletionPercentage ,
     
-} = require('../../controller/progress/userprogress Controller');
+} = require('../../controller/progress/userprogressController');
 
 const { authenticateToken } = require("../../security/Auth");
 

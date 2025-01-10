@@ -6,7 +6,7 @@ const {
      createChapter,
      updateChapter,
      deleteChapter 
-    } = require('../controller/chapter Controller');
+    } = require('../controller/chapterController');
 
 // Routes
 router.get('/chapters', getAllChapters);

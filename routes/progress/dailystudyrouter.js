@@ -4,7 +4,7 @@ const {
     getDailyStudy,
     updateDailyStudy,
     getAllDailyStudy
-} = require('../../controller/progress/dailystudy Controller');
+} = require('../../controller/progress/dailystudyController');
 
 const { authenticateToken } = require("../../security/Auth");
 

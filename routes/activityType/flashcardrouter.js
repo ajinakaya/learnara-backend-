@@ -6,7 +6,7 @@ const {
     getFlashcardActivityById,
     updateFlashcardActivity,
     deleteFlashcardActivity
-} = require('../../controller/activityType/flashcard Controller');
+} = require('../../controller/activityType/flashcardController');
 
 router.get('/flashcard', getAllFlashcardActivities);
 router.get('/flashcard/:id', getFlashcardActivityById);

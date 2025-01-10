@@ -6,7 +6,7 @@ const {
     getGoalById, 
     updateGoal, 
     deleteGoal 
-} = require('../../controller/goal/setgoals Controller');
+} = require('../../controller/goal/setgoalsController');
 
 
 router.post('/goals', createGoal);

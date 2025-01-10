@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { test, registerUser, loginUser } = require('../controller/auth Controller')
-const { authenticateToken } = require("../security/Auth");
+const {  registerUser, loginUser } = require('../controller/authController')
 
 
-//test route
-router.get('/', test)
+
+
 
 //Authentication routes
 router.post('/register', registerUser)

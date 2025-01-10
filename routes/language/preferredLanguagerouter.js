@@ -6,7 +6,7 @@ const {
   updateLanguage,
   deleteLanguage,
   getLanguages,
-} = require('../../controller/language/preferred_Language Controller');
+} = require('../../controller/language/preferred_LanguageController');
 
 // Preferred Language Routes
 

@@ -4,7 +4,7 @@ const {
     getCurrentSubLesson, 
     updateSubLessonProgress, 
     getAllSubLessonProgress 
-} = require('../../controller/progress/sublessonprogress Controller');
+} = require('../../controller/progress/sublessonprogressController');
 
 const { authenticateToken } = require("../../security/Auth");
 
