@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const AuthValidation = require('../validation/authvalidation');
 const {  findAllUsers,
          findUserById,
          updateUser,
@@ -7,7 +8,7 @@ const {  findAllUsers,
 
           router.get('/users', findAllUsers);  
           router.get('/users/:id',findUserById); 
-          router.put('/users/:id', updateUser);  
+          router.put('/users/:id',AuthValidation, updateUser);  
           router.delete('/users/:id',deleteUser);  
 
 

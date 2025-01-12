@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const QuizValidation = require('../../validation/activityType/quizvalidation');
 const { 
   createQuizActivity,
   getAllQuizActivities,
@@ -12,8 +13,8 @@ const {
 // Routes
 router.get('/quiz', getAllQuizActivities);
 router.get('/quiz/:id', getQuizActivityById);
-router.post('/quiz', createQuizActivity);
-router.put('/quiz/:id', updateQuizActivity);
+router.post('/quiz', QuizValidation,createQuizActivity);
+router.put('/quiz/:id', QuizValidation,updateQuizActivity);
 router.delete('/quiz/:id', deleteQuizActivity);
 
 module.exports = router;

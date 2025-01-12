@@ -1,6 +1,7 @@
 const express = require('express');
-
 const router = express.Router();
+const AudioActivityValidation = require('../../validation/activityType/audiovalidation');
+const upload = require('../../middlewares/upload');
 const {
     createAudioActivity,
     getAllAudioActivities,
@@ -10,10 +11,10 @@ const {
 } = require('../../controller/activityType/audioController');
 
 
-router.post('/audio', createAudioActivity);
+router.post('/audio',upload.single('audio'),AudioActivityValidation, createAudioActivity);
 router.get('/audio', getAllAudioActivities);
 router.get('/audio/:id', getAudioActivityById);
-router.put('/audio/:id', updateAudioActivity);
+router.put('/audio/:id',AudioActivityValidation, updateAudioActivity);
 router.delete('/audio/:id', deleteAudioActivity);
 
 module.exports = router;

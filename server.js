@@ -3,6 +3,7 @@ const dotenv = require('dotenv').config({ path: './config/.env' });
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser');
 const app = express();
+const path = require('path');
 
 
 // database connection
@@ -34,6 +35,7 @@ app.use('/userprogress', require('./routes/progress/userprogressrouter'));
 app.use('/userprogress', require('./routes/progress/sublessonrouter'));
 app.use('/userprogress', require('./routes/progress/dailystudyrouter'));
 app.use('/userprogress', require('./routes/progress/activityprogressrouter'));
+app.use('/uploads', express.static(path.join(__dirname, 'upload')));
 
 
 const port = 3001;
