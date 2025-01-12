@@ -3,12 +3,10 @@ const PreferredLanguage = require('../../models/language/PreferredLanguage');
 // Add a new language
 const addLanguage = async (req, res) => {
   try {
-    const { languageName, languageImage } = req.body;
+    const { languageName, } = req.body;
 
-    // Validate input
-    if (!languageName || !languageImage) {
-      return res.status(400).json({ error: 'Name and flag image are required' });
-    }
+    const languageImage = req.file ? req.file.path: null;
+
 
     const existingLanguage = await PreferredLanguage.findOne({ languageName });
     if (existingLanguage) {
@@ -26,12 +24,11 @@ const addLanguage = async (req, res) => {
 const updateLanguage = async (req, res) => {
   try {
     const { languageId } = req.params;
-    const { languageName, languageImage } = req.body;
+    const { languageName} = req.body;
 
-    if (!languageName && !languageImage) {
-      return res.status(400).json({ error: 'At least one field (name or flagImage) must be provided to update' });
-    }
+    const languageImage = req.file ? req.file.path: null;
 
+  
     const language = await PreferredLanguage.findById(languageId);
     if (!language) {
       return res.status(404).json({ error: 'Language not found' });

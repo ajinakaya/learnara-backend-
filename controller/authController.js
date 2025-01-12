@@ -9,12 +9,6 @@ const registerUser = async (req, res) => {
     try {
         const { fullname,username, email, password, confirmpassword} = req.body;
 
-        if (!fullname||!username || !email || !password || !confirmpassword ) {
-            return res.status(400).json({
-                error: 'All fields are required',
-            });
-        }
-
         if (password.length < 8) {
             return res.status(400).json({
                 error: 'Password should be at least 8 characters long',
@@ -125,9 +119,88 @@ const loginUser = async (req, res) => {
     }
 };
 
+const forgetPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        // Generate a reset token
+        const resetToken = jwt.sign({ _id: user._id }, process.env.SECRET_KEY, { expiresIn: '15m' });
+        console.log('Generated Token:', resetToken)
+
+        // Set up Nodemailer
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            auth: {
+                user: 'ajinakaya5@gmail.com',
+                pass: 'jzhl lqoh tgrq yjex',
+            },
+        });
+        
+
+        const mailOptions = {
+            from: 'ajinakaya5@gmail.com',
+            to: user.email,
+            subject: 'Password Reset Request',
+            html: `
+                <h1>Password Reset</h1>
+                <p>Click the link below to reset your password:</p>
+                <a href="http://localhost:5000/reset-password?token=${resetToken}">Reset Password</a>
+                <p>This link expires in 15 minutes.</p>
+            `,
+        
+        };
+        await transporter.sendMail(mailOptions);
+        res.status(200).json({ 
+            message: 'Password reset email sent.',
+            resetToken});
+    } catch (error) {
+        console.error('Error during forget password:', error);
+        res.status(500).json({ error: 'Something went wrong.' });
+    }
+};
+
+const resetPassword = async (req, res) => {
+    try {
+        const { token, newPassword } = req.body;
+
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+
+        const user = await User.findById(decoded._id);
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        user.password = hashedPassword;
+        await user.save();
+
+        res.status(200).json({ message: 'Password reset successful.' });
+    } catch (error) {
+        console.error('Error during password reset:', error);
+
+        if (error.name === 'TokenExpiredError') {
+            return res.status(400).json({ error: 'Token expired. Please request a new password reset.' });
+        }
+
+        res.status(500).json({ error: 'Something went wrong.' });
+    }
+};
+
+
+
 
 module.exports = {
     registerUser,
     loginUser,
+    forgetPassword,
+    resetPassword
 
 };

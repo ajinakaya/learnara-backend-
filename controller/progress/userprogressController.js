@@ -5,10 +5,7 @@ const updateUserProgress = async (req, res) => {
   try {
     const { courseId, chapterId, subLessonsCompletion, recentActivity, studyTime } = req.body;
 
-    if (!courseId || !subLessonsCompletion || subLessonsCompletion.length === 0) {
-      return res.status(400).json({ message: 'Course ID and subLessonsCompletion are required.' });
-    }
-
+    
     const userId = req.user._id;
 
     // Calculate completion percentage

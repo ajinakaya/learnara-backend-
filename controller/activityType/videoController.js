@@ -2,11 +2,25 @@ const VideoActivity = require('../../models/activityType/video');
 
 // Create a Video Activity
 const createVideoActivity = async (req, res) => {
+  const { title, description, duration, order, resources, transcription, difficulty, subtitles } = req.body;
+  const video = req.file ? req.file.path : null; 
+
   try {
-    const newVideoActivity = await VideoActivity.create(req.body);
+    const newVideoActivity = await VideoActivity.create({
+      title,
+      description,
+      video,
+      duration,
+      order,
+      resources,
+      transcription,
+      difficulty,
+      subtitles
+    });
+
     res.status(201).json(newVideoActivity);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: `Server error: ${error.message}` });
   }
 };
 
@@ -34,14 +48,32 @@ const getVideoActivityById = async (req, res) => {
 // Update a Video Activity
 const updateVideoActivity = async (req, res) => {
   try {
-    const updatedActivity = await VideoActivity.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const { title, description, duration, order, resources, transcription, difficulty, subtitles } = req.body;
+    const video= req.file ? req.file.path : null; 
+
+    const updatedActivity = await VideoActivity.findByIdAndUpdate(
+      req.params.id,
+      {
+        title,
+        description,
+        video,
+        duration,
+        order,
+        resources,
+        transcription,
+        difficulty,
+        subtitles
+      },
+      { new: true }  
+    );
+
     if (!updatedActivity) return res.status(404).json({ error: "Video Activity not found" });
+
     res.status(200).json(updatedActivity);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
-
 // Delete a Video Activity
 const deleteVideoActivity = async (req, res) => {
   try {

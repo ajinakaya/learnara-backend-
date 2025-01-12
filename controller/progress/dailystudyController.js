@@ -31,9 +31,7 @@ const updateDailyStudy = async (req, res) => {
     const { date, totalTimeSpent, activitiesCompleted, activities } = req.body;
     const userId = req.user._id;
 
-    if (!date || !totalTimeSpent || !activitiesCompleted) {
-      return res.status(400).json({ message: 'Date, total time spent, and activities completed are required.' });
-    }
+
 
     const currentDate = new Date(date).toISOString().split('T')[0];
     const existingDailyStudy = await DailyStudy.findOne({ userId, date: currentDate });

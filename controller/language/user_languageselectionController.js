@@ -39,11 +39,6 @@ const updateUserLanguagePreference = async (req, res) => {
     const userId = req.user._id;
     const { preferenceId, newLanguageId } = req.body;
 
-    // Validate input
-    if (!preferenceId || !newLanguageId) {
-      return res.status(400).json({ error: 'Preference ID and new language ID are required' });
-    }
-
     const newLanguage = await PreferredLanguage.findById(newLanguageId);
     if (!newLanguage) {
       return res.status(404).json({ error: 'New language not found' });

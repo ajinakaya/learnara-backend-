@@ -31,10 +31,7 @@ const updateSubLessonProgress = async (req, res) => {
     const { subLessonId, completionStatus, activities } = req.body;
     const userId = req.user._id;
 
-    if (!subLessonId || !completionStatus) {
-      return res.status(400).json({ error: 'SubLesson ID and completion status are required.' });
-    }
-
+   
     if (!['not_started', 'in_progress', 'completed'].includes(completionStatus)) {
       return res.status(400).json({ error: 'Invalid completion status.' });
     }

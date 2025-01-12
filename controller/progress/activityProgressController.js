@@ -31,9 +31,6 @@ const updateActivityProgress = async (req, res) => {
     const { activityId, activityType, status, progress, score, timeSpent, metadata } = req.body;
     const userId = req.user._id;
 
-    if (!activityId || !activityType || !status) {
-      return res.status(400).json({ message: 'Activity ID, type, and status are required.' });
-    }
 
     const updatedActivityProgress = await ActivityProgress.findOneAndUpdate(
       { userId, activityId },
