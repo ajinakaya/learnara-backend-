@@ -17,7 +17,7 @@ const audioActivitySchema = new mongoose.Schema({
     required: true 
   },
 
-  audioUrl: { 
+  audio: { 
     type: String, 
     required: true 
   },
