@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 
 const registerUser = async (req, res) => {
     try {
-        const { fullname,username, email, password, confirmpassword} = req.body;
+        const { fullname,username, email, image,password, confirmpassword} = req.body;
 
         if (password.length < 8) {
             return res.status(400).json({
@@ -35,6 +35,7 @@ const registerUser = async (req, res) => {
             fullname,
             username,
             email,
+            image,
             password: hashedPassword,
         
         });
@@ -65,7 +66,7 @@ const registerUser = async (req, res) => {
         const info = await transporter.sendMail(mailOptions);
         console.log('Email sent: ', info.messageId);
 
-        res.status(201).json({ message: 'User registered successfully. Email sent.', user });
+        res.status(200).json({ message: 'User registered successfully. Email sent.', user });
     } catch (error) {
         console.error('Error during registration:', error);
         res.status(500).json({ error: 'Something went wrong during registration' });
@@ -93,6 +94,7 @@ const loginUser = async (req, res) => {
             const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY, {
                 expiresIn: '1h', 
             });
+            console.log('Generated Token:', token);
 
             // Send token as a cookie
             res.cookie('jwtoken', token, {
@@ -194,11 +196,52 @@ const resetPassword = async (req, res) => {
     }
 };
 
+const imageUpload = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ error: 'No file uploaded' });
+        }
+        const image = req.file ? req.file.path : null;
+
+        if (!image) {
+            return res.status(400).json({ error: 'Invalid file uploaded' });
+        }
+        
+        const user = await User.findById(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        user.image = image;
+        await user.save();
+        res.status(200).json({ message: 'Image uploaded successfully', imageUrl: image });
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        res.status(500).json({ error: 'Something went wrong' });
+    }
+};
+
+const uploadimage = async (req, res) => {
+    if (!req.file) {
+        return res.status(400).send({ message: "Please upload a file" });
+    }
+    const image = req.file ? req.file.path : null;
+    res.status(200).json({
+        success: true,
+        filename: req.file.filename,
+        imagePath: image,  
+    });
+};
+
+
 
 module.exports = {
     registerUser,
     loginUser,
     forgetPassword,
-    resetPassword
+    resetPassword,
+    imageUpload,
+    uploadimage
+    
 
 };

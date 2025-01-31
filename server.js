@@ -6,15 +6,17 @@ const app = express();
 const path = require('path');
 
 
+
 // database connection
 mongoose.connect(process.env.MONGO_URL)
     .then(() => console.log('Database connected'))
     .catch((err) => console.log('Database not connected', err))
     
-
+   
 // middleware
 app.use(express.json())
 app.use(cookieParser());
+
 
 
 // routes
@@ -35,7 +37,7 @@ app.use('/userprogress', require('./routes/progress/userprogressrouter'));
 app.use('/userprogress', require('./routes/progress/sublessonrouter'));
 app.use('/userprogress', require('./routes/progress/dailystudyrouter'));
 app.use('/userprogress', require('./routes/progress/activityprogressrouter'));
-app.use('/uploads', express.static(path.join(__dirname, 'upload')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 const port = 3001;
