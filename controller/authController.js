@@ -7,39 +7,32 @@ const jwt = require('jsonwebtoken');
 
 const registerUser = async (req, res) => {
     try {
-        const { fullname,username, email, image,password, confirmpassword} = req.body;
-
+        const { fullname,username, email, password, confirmpassword} = req.body;
+        
         if (password.length < 8) {
             return res.status(400).json({
                 error: 'Password should be at least 8 characters long',
             });
         }
-
         if (password !== confirmpassword) {
             return res.status(400).json({
                 error: "Passwords don't match",
             });
         }
-
         const exist = await User.findOne({ email });
-
         if (exist) {
             return res.status(400).json({
                 error: 'Email is already taken',
             });
         }
-
         const hashedPassword = await bcrypt.hash(password, 10);
-
         const user = await User.create({
             fullname,
             username,
             email,
-            image,
             password: hashedPassword,
         
         });
-
           // Set up Nodemailer
           const transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
@@ -50,7 +43,6 @@ const registerUser = async (req, res) => {
                 pass: 'jzhl lqoh tgrq yjex',   
             },
         });
-
         // Send confirmation email
         const mailOptions = {
             from: 'ajinakaya5@gmail.com',
@@ -62,17 +54,14 @@ const registerUser = async (req, res) => {
                 
             `,
         };
-
         const info = await transporter.sendMail(mailOptions);
         console.log('Email sent: ', info.messageId);
-
-        res.status(200).json({ message: 'User registered successfully. Email sent.', user });
+        res.status(201).json({ message: 'User registered successfully. Email sent.', user });
     } catch (error) {
         console.error('Error during registration:', error);
         res.status(500).json({ error: 'Something went wrong during registration' });
     }
 };
-
 
 
 const loginUser = async (req, res) => {

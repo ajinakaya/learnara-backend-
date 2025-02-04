@@ -3,6 +3,7 @@ const dotenv = require('dotenv').config({ path: './config/.env' });
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser');
 const app = express();
+const cors = require('cors');
 const path = require('path');
 
 
@@ -16,6 +17,13 @@ mongoose.connect(process.env.MONGO_URL)
 // middleware
 app.use(express.json())
 app.use(cookieParser());
+app.use(
+    cors({
+        credentials:true,
+        origin:'http://localhost:5173'
+    })
+
+)
 
 
 
