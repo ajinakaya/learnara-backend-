@@ -6,6 +6,11 @@ const flashcardActivitySchema = new mongoose.Schema({
     default: 'flashcard',
     immutable: true
   },
+   language: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'PreferredLanguage', 
+        required: true 
+      },
 
   title: { 
     type: String, 

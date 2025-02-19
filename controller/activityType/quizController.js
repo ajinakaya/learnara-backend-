@@ -13,7 +13,8 @@ const createQuizActivity = async (req, res) => {
 // Get all Quiz Activities
 const getAllQuizActivities = async (req, res) => {
   try {
-    const activities = await QuizActivity.find();
+    const activities = await QuizActivity.find()
+    .populate('language', 'languageName languageImage');
     res.status(200).json(activities);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -23,7 +24,8 @@ const getAllQuizActivities = async (req, res) => {
 // Get a specific Quiz Activity by ID
 const getQuizActivityById = async (req, res) => {
   try {
-    const activity = await QuizActivity.findById(req.params.id);
+    const activity = await QuizActivity.findById(req.params.id)
+    .populate('language', 'languageName languageImage');
     if (!activity) return res.status(404).json({ error: "Quiz Activity not found" });
     res.status(200).json(activity);
   } catch (error) {
@@ -34,7 +36,7 @@ const getQuizActivityById = async (req, res) => {
 // Update a Quiz Activity
 const updateQuizActivity = async (req, res) => {
   try {
-    const updatedActivity = await QuizActivity.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updatedActivity = await QuizActivity.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('language', 'languageName languageImage');
     if (!updatedActivity) return res.status(404).json({ error: "Quiz Activity not found" });
     res.status(200).json(updatedActivity);
   } catch (error) {

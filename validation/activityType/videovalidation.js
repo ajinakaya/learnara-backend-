@@ -10,30 +10,10 @@ const videoActivitySchema = Joi.object({
     .valid('beginner', 'intermediate', 'advanced')
     .default('beginner'),
   order: Joi.number().required(),
-  subtitles: Joi.array()
-    .items(
-      Joi.object({
-        language: Joi.string().required(),
-        url: Joi.string().required().uri(),
-      })
-    )
-    .optional(),
-  resources: Joi.array()
-    .items(
-      Joi.object({
-        title: Joi.string().optional(),
-        url: Joi.string().optional().uri(),
-        type: Joi.string().optional(),
-      })
-    )
-    .optional(),
-  completionCriteria: Joi.object({
-    watchPercentage: Joi.number().min(0).max(100).default(90),
-  }).optional(),
 });
 
 function VideoValidation(req, res, next) {
-  const { title, description, duration, thumbnailUrl, transcription, difficulty, order, subtitles, resources, completionCriteria } = req.body;
+  const { title, description, duration, thumbnailUrl, transcription, difficulty, order,  } = req.body;
 
   // Check if the video file exists
   if (!req.file) {
@@ -48,9 +28,7 @@ function VideoValidation(req, res, next) {
     transcription,
     difficulty,
     order,
-    subtitles,
-    resources,
-    completionCriteria,
+
   });
 
   if (error) {

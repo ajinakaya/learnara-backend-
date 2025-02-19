@@ -12,7 +12,16 @@ const createSubLesson = async (req, res) => {
 
 const getAllSubLessons = async (req, res) => {
   try {
-    const subLessons = await SubLesson.find();
+    // Get the language filter from query params
+    const languageFilter = req.query.language;
+
+    // If language is provided, filter subLessons based on the language
+    const subLessonsQuery = languageFilter ? { language: languageFilter } : {};
+    
+    const subLessons = await SubLesson.find(subLessonsQuery)
+    .populate('language')
+    .populate('activities');
+    
     res.status(200).json(subLessons);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -21,8 +30,12 @@ const getAllSubLessons = async (req, res) => {
 
 const getSubLessonById = async (req, res) => {
   try {
-    const subLesson = await SubLesson.findById(req.params.id);
+    const subLesson = await SubLesson.findById(req.params.id)
+      .populate('language')
+      .populate('activities');
+
     if (!subLesson) return res.status(404).json({ error: "SubLesson not found" });
+
     res.status(200).json(subLesson);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -31,8 +44,12 @@ const getSubLessonById = async (req, res) => {
 
 const updateSubLesson = async (req, res) => {
   try {
-    const updatedSubLesson = await SubLesson.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updatedSubLesson = await SubLesson.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      .populate('language')
+      .populate('activities');
+
     if (!updatedSubLesson) return res.status(404).json({ error: "SubLesson not found" });
+
     res.status(200).json(updatedSubLesson);
   } catch (error) {
     res.status(400).json({ error: error.message });

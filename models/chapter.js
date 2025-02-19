@@ -13,6 +13,11 @@ const chapterSchema = new mongoose.Schema({
     type: Number, 
     required: true
   },
+  language: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'PreferredLanguage', 
+    required: true 
+  },
   subLessons: [{ 
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'SubLesson' 

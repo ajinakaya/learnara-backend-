@@ -24,6 +24,11 @@ const subLessonSchema = new mongoose.Schema({
     required: true, 
     enum: ['VideoActivity', 'AudioActivity', 'QuizActivity', 'FlashcardActivity'] 
   },
+   language: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'PreferredLanguage', 
+      required: true 
+    },
 
   duration: Number,
 

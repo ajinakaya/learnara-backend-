@@ -4,7 +4,9 @@ const goalValidationSchema = Joi.object({
   goal: Joi.string().required().trim().max(255),
   levels: Joi.array()
     .items(
+      
       Joi.object({
+        _id: Joi.string().optional(),
         level: Joi.string()
           .valid('A1', 'A2', 'B1', 'B2')
           .required(),

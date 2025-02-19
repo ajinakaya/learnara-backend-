@@ -32,11 +32,12 @@ const upload = multer({
     fileSize: 10 * 1024 * 1024, // Limit file size to 10MB
   },
   fileFilter: (req, file, cb) => {
+    console.log("Uploaded file mimetype:", file.mimetype);
     // Define allowed file types for images, videos, and audio
     const fileTypes = {
       image: /jpeg|jpg|png|gif/,
       video: /mp4|mov|avi|mkv/,
-      audio: /mp3|wav|aac|ogg/,
+      audio: /mp3|wav|aac|ogg|mp4|m4a|x-m4a/,  
     };
 
     // Determine the file type (image, video, or audio)

@@ -7,6 +7,12 @@ const quizActivitySchema = new mongoose.Schema({
     immutable: true
   },
 
+  language: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'PreferredLanguage', 
+    required: true 
+  },
+
   title: { 
     type: String, 
     required: true, 

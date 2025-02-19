@@ -2,7 +2,7 @@ const VideoActivity = require('../../models/activityType/video');
 
 // Create a Video Activity
 const createVideoActivity = async (req, res) => {
-  const { title, description, duration, order, resources, transcription, difficulty, subtitles } = req.body;
+  const { title, description, duration, order,  transcription, difficulty,language  } = req.body;
   const video = req.file ? req.file.path : null; 
 
   try {
@@ -12,10 +12,10 @@ const createVideoActivity = async (req, res) => {
       video,
       duration,
       order,
-      resources,
       transcription,
+      language,
       difficulty,
-      subtitles
+      
     });
 
     res.status(201).json(newVideoActivity);
@@ -48,7 +48,7 @@ const getVideoActivityById = async (req, res) => {
 // Update a Video Activity
 const updateVideoActivity = async (req, res) => {
   try {
-    const { title, description, duration, order, resources, transcription, difficulty, subtitles } = req.body;
+    const { title, description, duration, order, transcription, difficulty,language } = req.body;
     const video= req.file ? req.file.path : null; 
 
     const updatedActivity = await VideoActivity.findByIdAndUpdate(
@@ -59,13 +59,13 @@ const updateVideoActivity = async (req, res) => {
         video,
         duration,
         order,
-        resources,
         transcription,
+        language,
         difficulty,
-        subtitles
+        
       },
       { new: true }  
-    );
+    ).populate('language', 'languageName languageImage');
 
     if (!updatedActivity) return res.status(404).json({ error: "Video Activity not found" });
 

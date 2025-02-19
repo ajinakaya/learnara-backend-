@@ -31,12 +31,6 @@ const courseSchema = new mongoose.Schema({
      ref: 'Chapter' 
     }],
 
-  user: { 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'User', 
-    required: true 
-  },
-
   premium: { 
     type: Boolean, 
     default: false 

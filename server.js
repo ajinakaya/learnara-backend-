@@ -38,13 +38,14 @@ app.use('/quiz', require('./routes/activityType/quizrouter'));
 app.use('/chapter', require('./routes/chapterrouter'));
 app.use('/audio', require('./routes/activityType/audiorouter'));
 app.use('/video', require('./routes/activityType/videorouter'));
-app.use('/lesson', require('./routes/sublessonrouter'));
+app.use('/sublesson', require('./routes/sublessonrouter'));
 app.use('/flashcard', require('./routes/activityType/flashcardrouter'));
-app.use('/courser', require('./routes/courserouter'));   
+app.use('/course', require('./routes/courserouter'));   
 app.use('/userprogress', require('./routes/progress/userprogressrouter'));
 app.use('/userprogress', require('./routes/progress/sublessonrouter'));
 app.use('/userprogress', require('./routes/progress/dailystudyrouter'));
 app.use('/userprogress', require('./routes/progress/activityprogressrouter'));
+app.use('/activity', require('./routes/activityType/activityrouter'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 

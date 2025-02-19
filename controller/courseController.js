@@ -13,7 +13,7 @@ const createCourse = async (req, res) => {
 // Get all courses
 const getAllCourses = async (req, res) => {
   try {
-    const courses = await Course.find().populate('language', 'languageName languageImage');
+    const courses = await Course.find().populate('chapters language');
     res.status(200).json(courses);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -23,7 +23,7 @@ const getAllCourses = async (req, res) => {
 // Get a specific course by ID
 const getCourseById = async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id).populate('language', 'languageName languageImage');
+    const course = await Course.findById(req.params.id).populate('chapters language');
     if (!course) return res.status(404).json({ message: 'Course not found' });
     res.status(200).json(course);
   } catch (error) {
@@ -34,7 +34,7 @@ const getCourseById = async (req, res) => {
 // Update a course
 const updateCourse = async (req, res) => {
   try {
-    const updatedCourse = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updatedCourse = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('chapters language');
     if (!updatedCourse) return res.status(404).json({ message: 'Course not found' });
     res.status(200).json(updatedCourse);
   } catch (error) {

@@ -14,7 +14,7 @@ const {
 router.post('/audio',upload.single('audio'),AudioActivityValidation, createAudioActivity);
 router.get('/audio', getAllAudioActivities);
 router.get('/audio/:id', getAudioActivityById);
-router.put('/audio/:id',AudioActivityValidation, updateAudioActivity);
+router.put('/audio/:id',upload.single('audio'),AudioActivityValidation, updateAudioActivity);
 router.delete('/audio/:id', deleteAudioActivity);
 
 module.exports = router;

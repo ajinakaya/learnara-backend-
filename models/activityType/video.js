@@ -7,6 +7,12 @@ const videoActivitySchema = new mongoose.Schema({
     immutable: true
   },
 
+  language: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'PreferredLanguage', 
+    required: true 
+  },
+
   title: { 
     type: String, 
     required: true, 
@@ -41,15 +47,6 @@ const videoActivitySchema = new mongoose.Schema({
     required: true 
   },
 
-  subtitles: [{ 
-    language: String, 
-    url: String }],
-
-  resources: [{ 
-    title: String, 
-    url: String, 
-    type: String 
-  }],
 
   completionCriteria: {
     watchPercentage: { 

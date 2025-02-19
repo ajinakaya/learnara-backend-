@@ -5,6 +5,7 @@ const flashcardActivitySchema = Joi.object({
   description: Joi.string().required(),
   cards: Joi.array().items(
     Joi.object({
+      _id: Joi.string().optional(),
       front: Joi.string().required(),
       back: Joi.string().required(),
       hint: Joi.string().optional(),

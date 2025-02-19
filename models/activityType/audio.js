@@ -6,6 +6,11 @@ const audioActivitySchema = new mongoose.Schema({
     default: 'audio',
     immutable: true
   },
+  language: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'PreferredLanguage', 
+    required: true 
+  },
   title: { 
     type: String, 
     required: true, 
@@ -37,11 +42,6 @@ const audioActivitySchema = new mongoose.Schema({
     type: Number, 
     required: true 
   },
-
-  resources: [{ 
-    title: String, 
-    url: String, type: String 
-  }],
 
   completionCriteria: {
     listenPercentage: { type: Number, min: 0, max: 100, default: 90 }
