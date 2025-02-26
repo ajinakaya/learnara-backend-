@@ -13,7 +13,10 @@ const getAllChapters = async (req, res) => {
 // Get a single chapter 
 const getChapterById = async (req, res) => {
   try {
-    const chapter = await Chapter.findById(req.params.id).populate('subLessons prerequisites language');
+    const chapter = await Chapter.findById(req.params.id)
+      .populate('subLessons')
+      .populate('prerequisites')
+      .populate('language');
     if (!chapter) {
       return res.status(404).json({ message: 'Chapter not found' });
     }

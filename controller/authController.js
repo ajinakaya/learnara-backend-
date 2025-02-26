@@ -3,6 +3,7 @@ const User = require('../models/user');
 const comparePassword = require('../helpers/auth').comparePassword;
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
+const { createNotification } = require("../controller/notificationController");
 
 
 const registerUser = async (req, res) => {
@@ -25,6 +26,7 @@ const registerUser = async (req, res) => {
                 error: 'Email is already taken',
             });
         }
+
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await User.create({
             fullname,
@@ -33,6 +35,9 @@ const registerUser = async (req, res) => {
             password: hashedPassword,
         
         });
+
+        await createNotification(user.id, 'Welcome! You have successfully registered.');
+
           // Set up Nodemailer
           const transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
@@ -80,10 +85,10 @@ const loginUser = async (req, res) => {
 
         if (isPasswordMatch) {
             // Generate token
-            const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY, {
+            const token = jwt.sign({ _id: user._id,role: user.role }, process.env.SECRET_KEY, {
                 expiresIn: '1h', 
             });
-            console.log('Generated Token:', token);
+            console.log('Generated Token:', token, 'role:',user.role);
 
             // Send token as a cookie
             res.cookie('jwtoken', token, {
@@ -147,6 +152,8 @@ const forgetPassword = async (req, res) => {
         
         };
         await transporter.sendMail(mailOptions);
+
+        await createNotification(user._id, 'Password reset requested. Please check your email.');
         res.status(200).json({ 
             message: 'Password reset email sent.',
             resetToken});
@@ -172,6 +179,8 @@ const resetPassword = async (req, res) => {
 
         user.password = hashedPassword;
         await user.save();
+
+        await createNotification(user._id, 'Your password has been successfully reset.');
 
         res.status(200).json({ message: 'Password reset successful.' });
     } catch (error) {
@@ -203,6 +212,9 @@ const imageUpload = async (req, res) => {
         }
         user.image = image;
         await user.save();
+
+        await createNotification(user._id, 'Your profile image has been updated.');
+
         res.status(200).json({ message: 'Image uploaded successfully', imageUrl: image });
     } catch (error) {
         console.error('Error uploading image:', error);
@@ -210,17 +222,7 @@ const imageUpload = async (req, res) => {
     }
 };
 
-const uploadimage = async (req, res) => {
-    if (!req.file) {
-        return res.status(400).send({ message: "Please upload a file" });
-    }
-    const image = req.file ? req.file.path : null;
-    res.status(200).json({
-        success: true,
-        filename: req.file.filename,
-        imagePath: image,  
-    });
-};
+
 
 
 
@@ -230,7 +232,7 @@ module.exports = {
     forgetPassword,
     resetPassword,
     imageUpload,
-    uploadimage
+
     
 
 };

@@ -13,7 +13,9 @@ const createCourse = async (req, res) => {
 // Get all courses
 const getAllCourses = async (req, res) => {
   try {
-    const courses = await Course.find().populate('chapters language');
+    const { language } = req.query; 
+    const query = language ? { language } : {};
+    const courses = await Course.find(query).populate('chapters language');
     res.status(200).json(courses);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -23,7 +25,14 @@ const getAllCourses = async (req, res) => {
 // Get a specific course by ID
 const getCourseById = async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id).populate('chapters language');
+    const course = await Course.findById(req.params.id).populate({
+      path: 'chapters', 
+      populate: {
+        path: 'subLessons', 
+        select: 'title'  
+      }
+    })
+    .populate('language'); 
     if (!course) return res.status(404).json({ message: 'Course not found' });
     res.status(200).json(course);
   } catch (error) {

@@ -28,8 +28,13 @@ const createAudioActivity = async (req, res) => {
 // Get all Audio Activities
 const getAllAudioActivities = async (req, res) => {
   try {
-    const activities = await AudioActivity.find()
-    .populate('language', 'languageName languageImage');
+    const { language } = req.query; 
+    
+    const query = language ? { language } : {};
+    
+    const activities = await AudioActivity.find(query)
+      .populate('language', 'languageName languageImage');
+      
     res.status(200).json(activities);
   } catch (error) {
     res.status(500).json({ error: error.message });

@@ -13,7 +13,13 @@ const createFlashcardActivity = async (req, res) => {
 // Get all Flashcard Activities
 const getAllFlashcardActivities = async (req, res) => {
   try {
-    const activities = await FlashcardActivity.find() .populate('language', 'languageName languageImage');
+    const { language } = req.query; 
+    
+    const query = language ? { language } : {};
+    
+    const activities = await FlashcardActivity.find(query)
+      .populate('language', 'languageName languageImage');
+      
     res.status(200).json(activities);
   } catch (error) {
     res.status(500).json({ error: error.message });

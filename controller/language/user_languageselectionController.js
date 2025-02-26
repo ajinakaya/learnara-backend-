@@ -22,6 +22,7 @@ const addUserLanguagePreference = async (req, res) => {
     }
 
     const userPreference = await UserLanguagePreference.create({
+      _id: languageId,
       userId,
       languageName: language.languageName,
       languageImage: language.languageImage,
@@ -37,7 +38,8 @@ const addUserLanguagePreference = async (req, res) => {
 const updateUserLanguagePreference = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { preferenceId, newLanguageId } = req.body;
+    const { newLanguageId } = req.body;
+    const { preferenceId } = req.params;
 
     const newLanguage = await PreferredLanguage.findById(newLanguageId);
     if (!newLanguage) {

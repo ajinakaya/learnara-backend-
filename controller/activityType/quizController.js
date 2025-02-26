@@ -13,13 +13,17 @@ const createQuizActivity = async (req, res) => {
 // Get all Quiz Activities
 const getAllQuizActivities = async (req, res) => {
   try {
-    const activities = await QuizActivity.find()
-    .populate('language', 'languageName languageImage');
+    const { language } = req.query; 
+    const query = language ? { language } : {};
+    const activities = await QuizActivity.find(query)
+      .populate('language', 'languageName languageImage');
+      
     res.status(200).json(activities);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // Get a specific Quiz Activity by ID
 const getQuizActivityById = async (req, res) => {
