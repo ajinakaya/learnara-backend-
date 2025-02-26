@@ -28,8 +28,8 @@ app.use(
 
 
 // routes
-app.use('/', require('./routes/authroutes')),//Authentication routes
-app.use('/users', require('./routes/userroutes')),//User routes
+app.use('/', require('./routes/authroutes')),
+app.use('/users', require('./routes/userroutes')),
 app.use('/preferred-language', require('./routes/language/preferredLanguagerouter')); 
 app.use('/language', require('./routes/language/user_languageselecteroute'));
 app.use('/learning-goal', require('./routes/goal/user_learningGoalrouter'));
@@ -46,6 +46,7 @@ app.use('/userprogress', require('./routes/progress/sublessonrouter'));
 app.use('/userprogress', require('./routes/progress/dailystudyrouter'));
 app.use('/userprogress', require('./routes/progress/activityprogressrouter'));
 app.use('/activity', require('./routes/activityType/activityrouter'));
+app.use('/notifications', require('./routes/notificationrouter'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
