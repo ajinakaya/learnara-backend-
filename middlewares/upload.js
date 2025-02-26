@@ -37,7 +37,7 @@ const upload = multer({
     const fileTypes = {
       image: /jpeg|jpg|png|gif/,
       video: /mp4|mov|avi|mkv/,
-      audio: /mp3|wav|aac|ogg|mp4|m4a|x-m4a/,  
+      audio: /mp3|wav|mpeg|ogg|mp4|m4a|x-m4a/,  
     };
 
     // Determine the file type (image, video, or audio)
