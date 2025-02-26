@@ -32,8 +32,7 @@ const activityProgressSchema = new mongoose.Schema({
       default: Date.now
     },
     completedAt: Date,
-    metadata: {
-      watchedDuration: Number,      // For videos
+    metadata: {     
       correctAnswers: Number,       // For quizzes
       totalQuestions: Number,       // For quizzes
       flashcardsReviewed: Number,   // For flashcards
