@@ -13,7 +13,7 @@ const {
 router.post('/goal', authenticateToken, createLearningGoal);
 router.get('/get', authenticateToken, getLearningGoals);
 router.get('/get/:id', authenticateToken, getLearningGoalById);
-router.put('/update', authenticateToken, updateLearningGoal);
-router.delete('/delete', authenticateToken, deleteLearningGoal);
+router.put('/update/:id', authenticateToken, updateLearningGoal);
+router.delete('/delete/:id', authenticateToken, deleteLearningGoal);
 
 module.exports = router;

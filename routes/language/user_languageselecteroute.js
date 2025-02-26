@@ -10,7 +10,7 @@ const {
 const router = express.Router();
 
 router.post('/language', authenticateToken, addUserLanguagePreference);
-router.put('/language', authenticateToken, updateUserLanguagePreference);
+router.put('/language/:preferenceId', authenticateToken, updateUserLanguagePreference);
 router.delete('/language/:preferenceId', authenticateToken, removeUserLanguagePreference);
 router.get('/language', authenticateToken, getUserLanguagePreferences);
 
