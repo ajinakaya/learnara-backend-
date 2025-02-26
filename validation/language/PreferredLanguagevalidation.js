@@ -11,7 +11,7 @@ function PreferredLanguageValidation(req, res, next) {
 
   // Check if the language image is present (as a file upload)
   if (!req.file) {
-    return res.status(400).json({ error: '"languageImage" is required' });
+    return res.status(400).json({ error: 'languageImage" is required' });
   }
 
   const { error } = preferredLanguageValidationSchema.validate({ languageName });
