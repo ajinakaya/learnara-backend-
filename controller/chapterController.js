@@ -3,7 +3,9 @@ const Chapter = require('../models/chapter');
 // Get all chapters 
 const getAllChapters = async (req, res) => {
   try {
-    const chapters = await Chapter.find().populate('subLessons prerequisites language');
+    const { language } = req.query; 
+    const query = language ? { language } : {};
+    const chapters = await Chapter.find(query).populate('subLessons prerequisites language');
     res.status(200).json(chapters);
   } catch (err) {
     res.status(500).json({ message: 'Error fetching chapters', error: err });

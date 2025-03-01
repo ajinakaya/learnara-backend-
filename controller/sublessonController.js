@@ -12,13 +12,12 @@ const createSubLesson = async (req, res) => {
 
 const getAllSubLessons = async (req, res) => {
   try {
-    // Get the language filter from query params
-    const languageFilter = req.query.language;
-
-    // If language is provided, filter subLessons based on the language
-    const subLessonsQuery = languageFilter ? { language: languageFilter } : {};
+   
+    const { language } = req.query; 
     
-    const subLessons = await SubLesson.find(subLessonsQuery)
+    const query = language ? { language } : {};
+    
+    const subLessons = await SubLesson.find(query)
     .populate('language')
     .populate('activities');
     
